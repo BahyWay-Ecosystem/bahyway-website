@@ -1,14 +1,10 @@
 // HeroSection.tsx - Main hero section with 3D visualization
-import React, { Suspense } from 'react';
-import dynamic from 'next/dynamic';
+import React, { Suspense, lazy } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Play, Sparkles } from 'lucide-react';
 
-// Dynamically import to avoid SSR issues
-const ParticlesWayEngine = dynamic(
-  () => import('../visualization/ParticlesWayEngine'),
-  { ssr: false }
-);
+// Use React.lazy for Vite (Next.js 'dynamic' does not work here)
+const ParticlesWayEngine = lazy(() => import('../visualization/ParticlesWayEngine'));
 
 export default function HeroSection() {
   const scrollToFeatures = () => {
@@ -165,14 +161,6 @@ export default function HeroSection() {
               boxShadow: '0 4px 20px rgba(33, 150, 243, 0.4)',
               transition: 'all 0.3s'
             }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateY(-2px)';
-              e.currentTarget.style.boxShadow = '0 6px 30px rgba(33, 150, 243, 0.6)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = '0 4px 20px rgba(33, 150, 243, 0.4)';
-            }}
           >
             Explore Ecosystem
             <ArrowRight size={20} />
@@ -194,14 +182,6 @@ export default function HeroSection() {
               alignItems: 'center',
               gap: '10px',
               transition: 'all 0.3s'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)';
-              e.currentTarget.style.transform = 'translateY(-2px)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
-              e.currentTarget.style.transform = 'translateY(0)';
             }}
           >
             <Play size={20} />
@@ -228,43 +208,10 @@ export default function HeroSection() {
           <StatItem number="99.9%" label="Uptime SLA" />
         </motion.div>
       </div>
-
-      {/* Scroll Indicator */}
-      <motion.div
-        animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 1.5, repeat: Infinity }}
-        style={{
-          position: 'absolute',
-          bottom: '30px',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          zIndex: 3
-        }}
-      >
-        <div style={{
-          width: '30px',
-          height: '50px',
-          border: '2px solid rgba(255, 255, 255, 0.3)',
-          borderRadius: '20px',
-          position: 'relative'
-        }}>
-          <div style={{
-            width: '4px',
-            height: '10px',
-            background: 'white',
-            borderRadius: '2px',
-            position: 'absolute',
-            top: '10px',
-            left: '50%',
-            transform: 'translateX(-50%)'
-          }} />
-        </div>
-      </motion.div>
     </section>
   );
 }
 
-// Stat Item Component
 function StatItem({ number, label }: { number: string; label: string }) {
   return (
     <div style={{ textAlign: 'center' }}>
@@ -290,7 +237,6 @@ function StatItem({ number, label }: { number: string; label: string }) {
   );
 }
 
-// Loading Fallback
 function LoadingFallback() {
   return (
     <div style={{
@@ -299,28 +245,10 @@ function LoadingFallback() {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      background: 'radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%)'
+      background: '#000',
+      color: '#fff'
     }}>
-      <div style={{
-        textAlign: 'center',
-        color: 'white'
-      }}>
-        <div style={{
-          width: '60px',
-          height: '60px',
-          border: '3px solid rgba(33, 150, 243, 0.3)',
-          borderTop: '3px solid #2196F3',
-          borderRadius: '50%',
-          margin: '0 auto 20px',
-          animation: 'spin 1s linear infinite'
-        }} />
-        <p>Loading ParticlesWay Engine...</p>
-        <style>{`
-          @keyframes spin {
-            to { transform: rotate(360deg); }
-          }
-        `}</style>
-      </div>
+      Loading...
     </div>
   );
 }

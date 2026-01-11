@@ -219,7 +219,7 @@ export default function Footer() {
 
 function FooterLink({ href, label }: { href: string; label: string }) {
   return (
-
+    <a
       href={href}
       style={{
         fontSize: '14px',
@@ -241,7 +241,7 @@ function FooterLink({ href, label }: { href: string; label: string }) {
 
 function SocialLink({ href, icon }: { href: string; icon: React.ReactNode }) {
   return (
-
+    <a
       href={href}
       target="_blank"
       rel="noopener noreferrer"

@@ -1,182 +1,115 @@
-// Header.tsx - Navigation header
+// Header.tsx - Navigation Bar
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ArrowRight } from 'lucide-react';
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+  const navLinks = [
+    { label: 'Features', href: '#features' },
+    { label: 'Architecture', href: '#architecture' },
+    { label: 'Applications', href: '#applications' },
+    { label: 'Docs', href: '/docs' }
+  ];
+
+  // Change header background on scroll
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      setIsScrolled(window.scrollY > 20);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navItems = [
-    { label: 'Features', href: '#features' },
-    { label: 'Architecture', href: '#architecture' },
-    { label: 'Applications', href: '#applications' },
-    { label: 'Docs', href: '/docs' },
-    { label: 'Contact', href: '#contact' }
-  ];
-
   return (
-    <motion.header
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
-      style={{
-        position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        zIndex: 1000,
-        background: isScrolled
-          ? 'rgba(0, 0, 0, 0.9)'
-          : 'transparent',
-        backdropFilter: isScrolled ? 'blur(20px)' : 'none',
-        borderBottom: isScrolled
-          ? '1px solid rgba(255,255,255,0.1)'
-          : 'none',
-        transition: 'all 0.3s'
-      }}
-    >
-      <nav style={{
+    <header style={{
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
+      zIndex: 1000,
+      transition: 'all 0.3s ease',
+      padding: isScrolled ? '15px 20px' : '25px 20px',
+      background: isScrolled ? 'rgba(0, 0, 0, 0.8)' : 'transparent',
+      backdropFilter: isScrolled ? 'blur(10px)' : 'none',
+      borderBottom: isScrolled ? '1px solid rgba(255, 255, 255, 0.1)' : 'none'
+    }}>
+      <div style={{
         maxWidth: '1400px',
         margin: '0 auto',
-        padding: '20px 40px',
         display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: 'space-between'
       }}>
         {/* Logo */}
-        <a
-          href="/"
-          style={{
-            fontSize: '24px',
-            fontWeight: '800',
-            background: 'linear-gradient(135deg, #2196F3, #64B5F6)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            textDecoration: 'none'
-          }}
-        >
+        <a href="/" style={{
+          fontSize: '24px',
+          fontWeight: '800',
+          color: 'white',
+          textDecoration: 'none',
+          letterSpacing: '-1px',
+          background: 'linear-gradient(135deg, #fff 0%, #2196F3 100%)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent'
+        }}>
           BahyWay
         </a>
 
-        {/* Desktop Navigation */}
-        <div style={{
-          display: 'flex',
-          gap: '40px',
-          alignItems: 'center'
-        }}>
-          {navItems.map((item) => (
+        {/* Desktop Nav */}
+        <nav style={{ display: 'flex', alignItems: 'center', gap: '40px' }}>
+          <div className="desktop-links" style={{ display: 'flex', gap: '30px' }}>
+            {navLinks.map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                style={{
+                  color: 'rgba(255, 255, 255, 0.8)',
+                  textDecoration: 'none',
+                  fontSize: '15px',
+                  fontWeight: '500',
+                  transition: 'color 0.2s'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.color = '#2196F3'}
+                onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.8)'}
+              >
+                {item.label}
+              </a>
+            ))}
+          </div>
 
-              key={item.label}
-              href={item.href}
-              style={{
-                color: 'rgba(255,255,255,0.8)',
-                textDecoration: 'none',
-                fontSize: '16px',
-                fontWeight: '500',
-                transition: 'color 0.3s',
-                display: window.innerWidth < 768 ? 'none' : 'block'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.color = '#2196F3';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.color = 'rgba(255,255,255,0.8)';
-              }}
-            >
-              {item.label}
-            </a>
-          ))}
-
-          <button
-            style={{
-              padding: '12px 24px',
-              background: 'linear-gradient(135deg, #2196F3, #64B5F6)',
-              border: 'none',
-              borderRadius: '8px',
-              color: 'white',
-              fontSize: '14px',
-              fontWeight: '600',
-              cursor: 'pointer',
-              display: window.innerWidth < 768 ? 'none' : 'block'
-            }}
-          >
-            Get Started
-          </button>
-        </div>
-
-        {/* Mobile Menu Button */}
-        <button
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          style={{
-            display: window.innerWidth < 768 ? 'flex' : 'none',
+          <a href="#contact" style={{
+            padding: '10px 22px',
+            background: '#2196F3',
+            color: 'white',
+            borderRadius: '8px',
+            textDecoration: 'none',
+            fontSize: '14px',
+            fontWeight: '600',
+            display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center',
-            background: 'none',
-            border: 'none',
-            cursor: 'pointer',
-            color: 'white'
-          }}
-        >
-          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-      </nav>
+            gap: '8px',
+            transition: 'all 0.3s'
+          }}>
+            Get Started
+            <ArrowRight size={16} />
+          </a>
 
-      {/* Mobile Menu */}
-      {isMobileMenuOpen && (
-        <motion.div
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: 'auto' }}
-          exit={{ opacity: 0, height: 0 }}
-          style={{
-            background: 'rgba(0,0,0,0.95)',
-            backdropFilter: 'blur(20px)',
-            padding: '20px 40px'
-          }}
-        >
-          {navItems.map((item) => (
-
-              key={item.label}
-              href={item.href}
-              onClick={() => setIsMobileMenuOpen(false)}
-              style={{
-                display: 'block',
-                color: 'white',
-                textDecoration: 'none',
-                padding: '16px 0',
-                fontSize: '18px',
-                fontWeight: '500',
-                borderBottom: '1px solid rgba(255,255,255,0.1)'
-              }}
-            >
-              {item.label}
-            </a>
-          ))}
+          {/* Mobile Menu Toggle */}
           <button
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             style={{
-              width: '100%',
-              marginTop: '20px',
-              padding: '14px',
-              background: 'linear-gradient(135deg, #2196F3, #64B5F6)',
+              background: 'none',
               border: 'none',
-              borderRadius: '8px',
               color: 'white',
-              fontSize: '16px',
-              fontWeight: '600'
+              cursor: 'pointer',
+              display: 'none' // Hide by default, handle with media queries in CSS
             }}
           >
-            Get Started
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
-        </motion.div>
-      )}
-    </motion.header>
+        </nav>
+      </div>
+    </header>
   );
 }
