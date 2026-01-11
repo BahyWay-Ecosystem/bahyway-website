@@ -1,0 +1,49 @@
+{
+  "name": "bahyway-website",
+  "version": "1.0.0",
+  "description": "BahyWay ParticlesWay Ecosystem Website",
+  "private": true,
+  "scripts": {
+    "dev": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "lint": "eslint src --ext .ts,.tsx",
+    "preview": "serve -s build",
+    "analyze": "source-map-explorer 'build/static/js/*.js'"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.20.0",
+    "@react-three/fiber": "^8.15.12",
+    "@react-three/drei": "^9.92.7",
+    "@react-three/postprocessing": "^2.15.11",
+    "three": "^0.160.0",
+    "framer-motion": "^10.16.16",
+    "lucide-react": "^0.298.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.45",
+    "@types/react-dom": "^18.2.18",
+    "@types/three": "^0.160.0",
+    "typescript": "^5.3.3",
+    "react-scripts": "5.0.1",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0",
+    "eslint": "^8.56.0",
+    "source-map-explorer": "^2.5.3"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
